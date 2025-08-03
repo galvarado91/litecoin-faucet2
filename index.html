@@ -1,95 +1,19 @@
+rotado al blog
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Litecoin Faucet</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f0f8ff;
-      text-align: center;
-      padding: 20px;
-    }
-    .container {
-      max-width: 400px;
-      margin: auto;
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    input, button {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      font-size: 16px;
-    }
-    .ad {
-      margin: 20px 0;
-      padding: 10px;
-      background: #e6e6e6;
-      border-radius: 5px;
-    }
-  </style>
+  <meta http-equiv="refresh" content="1;url=https://prototipo0101.blogspot.com/">
+  <title>Redireccionando...</title>
+  <script>
+    setTimeout(function() {
+      window.location.href = "https://prototipo0101.blogspot.com/";
+    }, 1000);
+  </script>
 </head>
 <body>
-  <div class="container">
-    <h2>Litecoin Faucet</h2>
-    <p>Reclama 0.00000100 LTC cada 60 minutos</p>
-    <input type="text" id="wallet" placeholder="Ingresa tu dirección Litecoin">
-    <button onclick="claim()">Reclamar</button>
-    <div id="status"></div>
-    <div class="ad">[Anuncio aquí: xxxx]</div>
-  </div>
-  <script>
-    const cooldown = 60 * 60 * 1000; // 60 minutos en milisegundos
-
-    function claim() {
-      const wallet = document.getElementById("wallet").value.trim();
-      const lastClaim = localStorage.getItem("ltc_" + wallet);
-      const now = Date.now();
-
-      if (!wallet) {
-        document.getElementById("status").innerText = "Por favor ingresa tu dirección Litecoin.";
-        return;
-      }
-
-      if (lastClaim && now - parseInt(lastClaim) < cooldown) {
-        const remaining = cooldown - (now - parseInt(lastClaim));
-        const minutes = Math.floor(remaining / 60000);
-        const seconds = Math.floor((remaining % 60000) / 1000);
-        document.getElementById("status").innerText = `Espera ${minutes}m ${seconds}s para reclamar de nuevo.`;
-        return;
-      }
-
-      fetch("https://faucetpay.io/api/v1/send", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          api_key: "TU_API_KEY",
-          to: wallet,
-          amount: "0.00000100",
-          currency: "LTC",
-          ref: "litecoin_faucet"
-        }),
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.status === 200) {
-          localStorage.setItem("ltc_" + wallet, now);
-          document.getElementById("status").innerText = "¡Pago enviado! Reclama de nuevo en 60 minutos.";
-        } else {
-          document.getElementById("status").innerText = "Error: " + data.message;
-        }
-      })
-      .catch(() => {
-        document.getElementById("status").innerText = "Hubo un error al procesar el reclamo.";
-      });
-    }
-  </script>
+  <h2>Redireccionando a tu blog...</h2>
+  <p>Si no eres redirigido automáticamente, haz clic <a href="https://prototipo0101.blogspot.com/">aquí</a>.</p>
 </body>
 </html>

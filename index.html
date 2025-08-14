@@ -3,17 +3,105 @@ rotado al blog
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="1;url=https://prototipo0101.blogspot.com/">
-  <title>Redireccionando...</title>
-  <script>
-    setTimeout(function() {
-      window.location.href = "https://prototipo0101.blogspot.com/";
-    }, 1000);
-  </script>
+<meta charset="UTF-8">
+<title>Procesando...</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {text-align: center; font-family: Arial, sans-serif; background: #f4f4f4; color: #333;}
+h1 {margin-top: 50px;}
+button {padding: 15px 30px; font-size: 20px; background: #28a745; color: #fff; border: none; border-radius: 5px; cursor: pointer;}
+button:hover {background: #218838;}
+.hidden {display: none;}
+.progress-bar {width: 80%; height: 20px; background: #ccc; margin: 20px auto; border-radius: 10px; overflow: hidden;}
+.progress {height: 100%; background: #28a745; width: 0%;}
+</style>
 </head>
 <body>
-  <h2>Redireccionando a tu blog...</h2>
-  <p>Si no eres redirigido automáticamente, haz clic <a href="https://prototipo0101.blogspot.com/">aquí</a>.</p>
+<h1>¡Preparando tu acceso!</h1>
+<p>Serás redirigido en <span id="count">5</span> segundos...</p>
+<div class="progress-bar"><div class="progress" id="progress"></div></div>
+<button onclick="manualGo()">Continuar ahora</button>
+<p id="status"></p>
+
+<script>
+// ======== CONFIGURACIÓN ==========
+const LINKS = [
+  { url: "https://www.profitableratecpm.com/bcbdpfp6w?key=214ba145b5e32e4428852c3e3b225a9c" },
+  { url: "https://www.profitableratecpm.com/tg4925wu?key=881390cc73acb2dbf7ed411d47708805" },
+  { url: "https://www.profitableratecpm.com/nskxzsbkv?key=7c1c6256917626ee14d182d4a11d60b3" }
+];
+const COUNTDOWN_START = 5; // Segundos
+const MIN_TIME_MS = 2000; // Tiempo mínimo en página antes de abrir
+// =================================
+
+let startTs = performance.now();
+let humanScore = 0;
+
+// Detectar interacción humana
+document.addEventListener("mousemove", () => humanScore++);
+document.addEventListener("keydown", () => humanScore++);
+document.addEventListener("click", () => humanScore++);
+
+// Detectar user-agents sospechosos (bots básicos)
+function basicBotCheck(){
+  const badUA = /(bot|crawler|spider|crawling|headless|phantom)/i;
+  return !badUA.test(navigator.userAgent);
+}
+
+// Pasar parámetros UTM/SubIDs al destino
+function carryParams(baseUrl){
+  const params = window.location.search;
+  return baseUrl + params;
+}
+
+// Abrir todos los links en pestañas nuevas
+function openAllLinks(){
+  LINKS.forEach(l => {
+    const dst = carryParams(l.url);
+    try {
+      window.open(dst, "_blank");
+    } catch(e){
+      console.error("No se pudo abrir:", dst, e);
+    }
+  });
+}
+
+// Redirección automática tras validar
+function autoGo(){
+  const dwell = performance.now() - startTs;
+  const passedBasic = basicBotCheck();
+  const passedDwell = dwell >= MIN_TIME_MS;
+  const passedInteract = humanScore >= 1;
+
+  if(passedBasic && passedDwell && passedInteract){
+    statusEl.textContent = "Listo. Abriendo enlaces…";
+    openAllLinks();
+  } else {
+    statusEl.textContent = "Verificación manual requerida. Haz clic en 'Continuar ahora'.";
+  }
+}
+
+// Redirección manual
+function manualGo(){
+  statusEl.textContent = "Abriendo enlaces…";
+  openAllLinks();
+}
+
+// Temporizador con barra de progreso
+let seconds = COUNTDOWN_START;
+let countEl = document.getElementById('count');
+let progressEl = document.getElementById('progress');
+let statusEl = document.getElementById('status');
+
+let countdown = setInterval(() => {
+  seconds--;
+  countEl.textContent = seconds;
+  progressEl.style.width = ((COUNTDOWN_START - seconds) / COUNTDOWN_START * 100) + "%";
+  if(seconds <= 0){
+    clearInterval(countdown);
+    autoGo();
+  }
+}, 1000);
+</script>
 </body>
 </html>
